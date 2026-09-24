@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>JavaScript Runtime and Async</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main>
+    <h1>JavaScript Runtime and Async</h1>
+
+    <section>
+      <h2>Tasks</h2>
+      <div class="toolbar">
+        <button id="runAll">Run All Tasks</button>
+        <button id="compare" class="secondary">Compare sequential and concurrent</button>
+      </div>
+      <ul id="taskList" class="tasks"></ul>
+      <p id="allDone" class="banner" hidden>All tasks finished</p>
+    </section>
+
+    <section>
+      <h2>Sequential vs concurrent</h2>
+      <div id="compareResult" class="panel muted">Press the compare button to measure both modes.</div>
+    </section>
+
+    <section>
+      <h2>Event Loop demo</h2>
+      <div class="toolbar">
+        <button id="loopDemo">Run Event Loop Demo</button>
+      </div>
+      <pre id="demoCode" class="code"></pre>
+      <div class="columns">
+        <div>
+          <h3>My prediction (written before running)</h3>
+          <ol id="predicted" class="panel"></ol>
+        </div>
+        <div>
+          <h3>Actual output</h3>
+          <ol id="actual" class="panel muted"><li>Not run yet</li></ol>
+        </div>
+      </div>
+      <p id="loopVerdict" class="banner" hidden></p>
+      <div class="panel explain">
+        <p><b>Call Stack:</b> runs the synchronous code first: script start, async function start, script end. <code>await</code> pauses the async function and returns control to the caller.</p>
+        <p><b>Microtask Queue:</b> once the stack is empty, all microtasks run: promise 1, async continuation, promise 2. Promise 2 is added by promise 1, and still runs before any timer.</p>
+        <p><b>Task Queue:</b> holds the timer callbacks. The Event Loop takes one task, runs it, then empties the microtask queue again (so "microtask inside timer 1" runs before timer 2).</p>
+      </div>
+    </section>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
